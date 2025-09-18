@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizVerse - Ultimate Quiz Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="public/style.css">
+</head>
+<body class="gradient-bg min-h-screen text-white">
+    <div id="particles" class="fixed inset-0 pointer-events-none z-0"></div>
+    
+    <header class="relative z-10 bg-white/10 backdrop-blur-lg border-b border-white/20">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">Q</span>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold text-white">QuizVerse</h1>
+                        <p class="text-white/70 text-sm">Ultimate Quiz Experience</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="showMyQuizzes()" class="bg-white/20 hover:bg-white/30 backdrop-blur-lg px-6 py-3 rounded-full transition-all duration-300">
+                        <span class="text-white font-semibold">📚 My Quizzes</span>
+                    </button>
+                    <div id="userStats" class="hidden bg-white/20 backdrop-blur-lg px-6 py-3 rounded-full">
+                        <span class="text-white font-semibold">Score: <span id="totalScore" class="text-yellow-300">0</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative z-10 max-w-7xl mx-auto px-6 py-12">
+        <div id="homeScreen" class="fade-in">
+            <div class="text-center mb-16">
+                <h2 class="text-6xl font-bold text-white mb-6">Choose Your Challenge</h2>
+                <p class="text-2xl text-white/80">Master different subjects across multiple difficulty levels</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card-hover bg-white/15 backdrop-blur-lg rounded-3xl p-8 border border-white/20 cursor-pointer" onclick="showLevels('english')">
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 pulse">
+                            <span class="text-4xl">📚</span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">English</h3>
+                        <p class="text-white/70 mb-6">Grammar, vocabulary, and comprehension</p>
+                        <button class="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-4 px-6 rounded-2xl transition-all duration-300">
+                            Start English Quiz
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white/15 backdrop-blur-lg rounded-3xl p-8 border border-white/20 cursor-pointer" onclick="showLevels('aptitude')">
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6 pulse">
+                            <span class="text-4xl">🧮</span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Aptitude</h3>
+                        <p class="text-white/70 mb-6">Mathematical and numerical reasoning</p>
+                        <button class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-4 px-6 rounded-2xl transition-all duration-300">
+                            Start Aptitude Quiz
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white/15 backdrop-blur-lg rounded-3xl p-8 border border-white/20 cursor-pointer" onclick="showLevels('reasoning')">
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6 pulse">
+                            <span class="text-4xl">🧠</span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Reasoning</h3>
+                        <p class="text-white/70 mb-6">Logical thinking and patterns</p>
+                        <button class="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-bold py-4 px-6 rounded-2xl transition-all duration-300">
+                            Start Reasoning Quiz
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white/15 backdrop-blur-lg rounded-3xl p-8 border border-white/20 cursor-pointer" onclick="showLevels('general')">
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-gradient-to-r from-orange-400 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6 pulse">
+                            <span class="text-4xl">🌍</span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">General Knowledge</h3>
+                        <p class="text-white/70 mb-6">World facts and current affairs</p>
+                        <button class="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-4 px-6 rounded-2xl transition-all duration-300">
+                            Start GK Quiz
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-white/15 backdrop-blur-lg rounded-3xl p-8 border border-white/20 cursor-pointer" onclick="showCreateQuiz()">
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-gradient-to-r from-cyan-400 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-6 pulse">
+                            <span class="text-4xl">✨</span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Create Quiz</h3>
+                        <p class="text-white/70 mb-6">Build your own custom quiz</p>
+                        <button class="w-full bg-gradient-to-r from-cyan-500 to-teal-600 hover:from-cyan-600 hover:to-teal-700 text-white font-bold py-4 px-6 rounded-2xl transition-all duration-300">
+                            Create New Quiz
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="levelScreen" class="hidden fade-in">
+            <div class="text-center mb-12">
+                <button onclick="goHome()" class="mb-6 bg-white/20 hover:bg-white/30 text-white px-6 py-3 rounded-full transition-all duration-300">
+                    ← Back to Categories
+                </button>
+                <h2 id="levelTitle" class="text-5xl font-bold text-white mb-4"></h2>
+                <p class="text-xl text-white/80">Choose your difficulty level</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <div class="bg-gradient-to-br from-green-400/20 to-emerald-500/20 backdrop-blur-lg rounded-3xl p-8 border border-green-400/30 cursor-pointer hover:scale-105 transition-all duration-300" onclick="startQuiz('beginner')">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span class="text-2xl">🌱</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3">Beginner</h3>
+                        <p class="text-white/70 mb-4">Perfect for getting started</p>
+                        <div class="bg-white/10 rounded-lg p-4 mb-6">
+                            <div class="flex justify-between text-sm text-white/80 mb-2">
+                                <span>Questions:</span>
+                                <span id="beginnerQuestions">10</span>
+                            </div>
+                            <div class="flex justify-between text-sm text-white/80 mb-2">
+                                <span>Time:</span>
+                                <span>15 minutes</span>
+                            </div>
+                            <div class="flex justify-between text-sm text-white/80">
+                                <span>Difficulty:</span>
+                                <span class="text-green-400">Easy</span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300">
+                            Start Beginner
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-blue-400/20 to-indigo-500/20 backdrop-blur-lg rounded-3xl p-8 border border-blue-400/30 cursor-pointer hover:scale-105 transition-all duration-300" onclick="startQuiz('intermediate')">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span class="text-2xl">⚡</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3">Intermediate</h3>
+                        <p class="text-white/70 mb-4">Challenge your knowledge</p>
+                        <div class="bg-white/10 rounded-lg p-4 mb-6">
+                            <div class="flex justify-between text-sm text-white/80 mb-2">
+                                <span>Questions:</span>
+                                <span id="intermediateQuestions">8</span>
+                            </div>
+                            <div class="flex justify-between text-sm text-white/80 mb-2">
+                                <span>Time:</span>
+                                <span>12 minutes</span>
+                            </div>
+                            <div class="flex justify-between text-sm text-white/80">
+                                <span>Difficulty:</span>
+                                <span class="text-blue-400">Medium</span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300">
+                            Start Intermediate
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-purple-400/20 to-pink-500/20 backdrop-blur-lg rounded-3xl p-8 border border-purple-400/30 cursor-pointer hover:scale-105 transition-all duration-300" onclick="startQuiz('advanced')">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span class="text-2xl">🔥</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3">Advanced</h3>
+                        <p class="text-white/70 mb-4">For the experts</p>
+                        <div class="bg-white/10 rounded-lg p-4 mb-6">
+                            <div class="flex justify-between text-sm text-white/80 mb-2">
+                                <span>Questions:</span>
+                                <span id="advancedQuestions">5</span>
+                            </div>
+                            <div class="flex justify-between text-sm text-white/80 mb-2">
+                                <span>Time:</span>
+                                <span>10 minutes</span>
+                            </div>
+                            <div class="flex justify-between text-sm text-white/80">
+                                <span>Difficulty:</span>
+                                <span class="text-purple-400">Hard</span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300">
+                            Start Advanced
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="quizScreen" class="hidden fade-in">
+            <div class="bg-white/15 backdrop-blur-lg rounded-3xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 border border-white/20">
+                <div class="block sm:hidden mb-4">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex-1">
+                            <h2 id="quizTitle" class="text-xl font-bold text-white mb-1"></h2>
+                            <p id="quizLevel" class="text-white/70 text-sm"></p>
+                        </div>
+                        <button onclick="goHome()" class="bg-red-500/20 hover:bg-red-500/30 text-red-300 px-3 py-2 rounded-lg transition-all duration-300 text-sm ml-2">
+                            Exit
+                        </button>
+                    </div>
+                    <div class="text-center bg-white/10 rounded-lg p-3">
+                        <p class="text-white/70 text-xs">Time Remaining</p>
+                        <p id="timer" class="text-lg font-bold text-red-400">15:00</p>
+                    </div>
+                </div>
+
+                <div class="hidden sm:flex justify-between items-center mb-6">
+                    <div>
+                        <h2 id="quizTitle" class="text-2xl lg:text-3xl font-bold text-white mb-2"></h2>
+                        <p id="quizLevel" class="text-white/70"></p>
+                    </div>
+                    <div class="flex items-center space-x-4 lg:space-x-6">
+                        <div class="text-center">
+                            <p class="text-white/70 text-sm">Time Remaining</p>
+                            <p id="timer" class="text-xl lg:text-2xl font-bold text-red-400">15:00</p>
+                        </div>
+                        <button onclick="goHome()" class="bg-red-500/20 hover:bg-red-500/30 text-red-300 px-4 lg:px-6 py-2 lg:py-3 rounded-xl transition-all duration-300">
+                            Exit Quiz
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="w-full bg-white/20 rounded-full h-3 sm:h-4">
+                        <div id="progressBar" class="bg-gradient-to-r from-cyan-400 to-blue-500 h-3 sm:h-4 rounded-full transition-all duration-500" style="width: 10%"></div>
+                    </div>
+                    <p class="text-white/70 text-xs sm:text-sm mt-2">Question <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span></p>
+                </div>
+            </div>
+
+            <div class="bg-white/15 backdrop-blur-lg rounded-3xl p-4 sm:p-6 lg:p-10 border border-white/20">
+                <div class="mb-6 sm:mb-8">
+                    <h3 id="questionText" class="text-lg sm:text-xl lg:text-2xl font-semibold text-white mb-6 sm:mb-8 leading-relaxed"></h3>
+                    <div id="optionsContainer" class="space-y-3 sm:space-y-4"></div>
+                </div>
+                
+                <div class="block sm:hidden space-y-4">
+                    <div class="text-center bg-white/10 px-4 py-3 rounded-xl">
+                        <p class="text-white/70 text-sm">Current Score</p>
+                        <p id="currentScore" class="text-xl font-bold text-yellow-400">0</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <button id="prevBtn" onclick="previousQuestion()" class="bg-white/20 hover:bg-white/30 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm" disabled>
+                            ← Previous
+                        </button>
+                        <button id="nextBtn" onclick="nextQuestion()" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 text-sm">
+                            Next →
+                        </button>
+                    </div>
+                </div>
+
+                <div class="hidden sm:flex justify-between items-center">
+                    <button id="prevBtn" onclick="previousQuestion()" class="bg-white/20 hover:bg-white/30 text-white font-semibold py-3 lg:py-4 px-6 lg:px-8 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                        ← Previous
+                    </button>
+                    <div class="text-center bg-white/10 px-4 lg:px-6 py-3 rounded-xl">
+                        <p class="text-white/70 text-sm">Current Score</p>
+                        <p id="currentScore" class="text-xl lg:text-2xl font-bold text-yellow-400">0</p>
+                    </div>
+                    <button id="nextBtn" onclick="nextQuestion()" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 lg:py-4 px-6 lg:px-8 rounded-xl transition-all duration-300">
+                        Next →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="createQuizScreen" class="hidden fade-in">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-8">
+                    <button onclick="goHome()" class="mb-6 bg-white/20 hover:bg-white/30 text-white px-6 py-3 rounded-full transition-all duration-300">
+                        ← Back to Home
+                    </button>
+                    <h2 class="text-5xl font-bold text-white mb-4">Create Your Quiz</h2>
+                    <p class="text-xl text-white/80">Design your own custom quiz</p>
+                </div>
+
+                <div class="bg-white/15 backdrop-blur-lg rounded-3xl p-8 mb-8 border border-white/20">
+                    <h3 class="text-2xl font-bold text-white mb-6">Quiz Details</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-white/80 text-sm font-medium mb-2">Quiz Name</label>
+                            <input type="text" id="customQuizName" placeholder="Enter quiz name..."
+                                   class="w-full bg-white/10 border border-white/30 rounded-xl px-4 py-3 text-white placeholder-white/50 focus:border-purple-400 focus:outline-none transition-all duration-300">
+                        </div>
+                        <div>
+                            <label class="block text-white/80 text-sm font-medium mb-2">Time Limit (minutes)</label>
+                            <input type="number" id="customQuizTimeLimit" min="1" max="60" value="15"
+                                   class="w-full bg-white/10 border border-white/30 rounded-xl px-4 py-3 text-white placeholder-white/50 focus:border-purple-400 focus:outline-none transition-all duration-300">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white/15 backdrop-blur-lg rounded-3xl p-8 mb-8 border border-white/20">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold text-white">Questions</h3>
+                        <button onclick="addQuestion()" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300">
+                            + Add Question
+                        </button>
+                    </div>
+                    
+                    <div id="questionsContainer" class="space-y-6">
+                        </div>
+                    
+                    <div id="noQuestionsMessage" class="text-center py-12 text-white/60">
+                        <div class="text-6xl mb-4">📝</div>
+                        <p class="text-xl">No questions added yet</p>
+                        <p class="text-sm mt-2">Click "Add Question" to start building your quiz</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-center space-x-4">
+                    <button onclick="saveQuiz()" id="saveBtn" 
+                            class="bg-green-500/50 text-white/50 font-bold py-4 px-8 rounded-xl transition-all duration-300 cursor-not-allowed">
+                        Save Quiz
+                    </button>
+                    <button onclick="previewQuiz()" id="previewBtn" 
+                            class="bg-blue-500/50 text-white/50 font-bold py-4 px-8 rounded-xl transition-all duration-300 cursor-not-allowed">
+                        Preview Quiz
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="myQuizzesScreen" class="hidden fade-in">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-8">
+                    <button onclick="goHome()" class="mb-6 bg-white/20 hover:bg-white/30 text-white px-6 py-3 rounded-full transition-all duration-300">
+                        ← Back to Home
+                    </button>
+                    <h2 class="text-5xl font-bold text-white mb-4">My Custom Quizzes</h2>
+                    <p class="text-xl text-white/80">Your created quizzes are stored here</p>
+                </div>
+
+                <div id="savedQuizzesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    </div>
+
+                <div id="noSavedQuizzes" class="text-center py-16 text-white/60">
+                    <div class="text-8xl mb-6">📚</div>
+                    <h3 class="text-3xl font-bold mb-4">No Custom Quizzes Yet</h3>
+                    <p class="text-xl mb-8">Create your first quiz to see it here</p>
+                    <button onclick="showCreateQuiz()" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300">
+                        Create Your First Quiz
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="resultsScreen" class="hidden fade-in">
+            <div class="max-w-3xl mx-auto">
+                <div class="bg-white/15 backdrop-blur-lg rounded-3xl p-12 text-center border border-white/20">
+                    <div class="w-24 h-24 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-8 pulse">
+                        <span class="text-5xl">🎉</span>
+                    </div>
+                    <h2 class="text-4xl font-bold text-white mb-6">Quiz Completed!</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-white/10 rounded-2xl p-6">
+                            <p class="text-white/70 mb-2">Your Score</p>
+                            <p id="finalScore" class="text-4xl font-bold text-purple-400">0/10</p>
+                        </div>
+                        <div class="bg-white/10 rounded-2xl p-6">
+                            <p class="text-white/70 mb-2">Percentage</p>
+                            <p id="percentage" class="text-4xl font-bold text-green-400">0%</p>
+                        </div>
+                        <div class="bg-white/10 rounded-2xl p-6">
+                            <p class="text-white/70 mb-2">Time Taken</p>
+                            <p id="timeTaken" class="text-4xl font-bold text-blue-400">0:00</p>
+                        </div>
+                    </div>
+                    <div id="performanceMessage" class="mb-8 p-6 rounded-2xl"></div>
+                    <div class="space-y-4">
+                        <button onclick="goHome()" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300">
+                            Take Another Quiz
+                        </button>
+                        <button onclick="retakeQuiz()" class="w-full bg-white/20 hover:bg-white/30 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-300">
+                            Retake This Quiz
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="public/script.js"></script>
+</body>
+</html>
